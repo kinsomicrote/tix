@@ -1,4 +1,5 @@
 class InactiveEventsController < ApplicationController
+  before_action :authenticate_user!, :except => [:create, :new, :destroy]
   before_action :set_inactive_event, only: [:destroy]
 
 
