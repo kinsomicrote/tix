@@ -7,6 +7,7 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require("bootstrap")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -15,3 +16,23 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+// import '../stylesheets/application'
+import flatpickr from 'flatpickr'
+import "flatpickr/dist/flatpickr.min.css"
+import './bootstrap_custom.js'
+
+$( document ).on('turbolinks:load', function() {
+    flatpickr(".eventDate", {
+        enableTime: true,
+        minDate: new Date()
+    })
+    flatpickr(".startDate", {
+        enableTime: true,
+        minDate: new Date()
+    })
+    flatpickr(".inactiveDates", {})
+    $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert").slideUp(500);
+    });
+})

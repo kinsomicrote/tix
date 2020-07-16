@@ -1,0 +1,76 @@
+<main role="main">
+  <div class="jumbotron">
+    <div class="container">
+      <p id="notice"><%= notice %></p>
+      <h1 class="display-4"><%= @event.name %></h1>
+      <p><%= @event.description %></p>
+      <p><%= @event.start_date.strftime("Starts on %a %d, of %b %Y at %I:%M%p") %> - <%= @event.end_date.strftime("Ends on %a %d, of %b %Y at %I:%M%p") %></p>
+    </div>
+  </div>
+
+  <div class="container">
+    <% if @event.inactive_events.length > 0 %>
+      <h6>This event will be inactive on the following days:</h6>
+      <ol>
+        <% @event.inactive_events.each do |inactive_event| %>
+          <li>
+            <%= inactive_event.date.strftime("%a %d, of %b %Y") %>
+            <% if user_signed_in? && @event.user_id == current_user.id %>
+              <button type="button" class="btn btn-danger">
+                <%= link_to 'X', inactive_event_path(id: inactive_event.id), method: :delete %>
+              </button>
+              <br />
+              <br />
+            <% end %>
+          </li>
+        <% end %>
+      </ol>
+    <% end %>
+  </div>
+
+  <div class="container">
+    <% if @event.tickets.length > 0 %>
+      <div>
+        <h6>Available Tickets</h6>
+        <ul>
+          <% @event.tickets.each do |ticket| %>
+            <li>
+              <p><%= ticket.name %></p>
+              <p><%= ticket.option %></p>
+              <% if ticket.amount %>
+                <%= ticket.amount %>
+              <% end %>
+              <% if user_signed_in? && @event.user_id == current_user.id %>
+                <button type="button" class="btn btn-primary">
+                  <%= link_to 'Edit', edit_ticket_path(ticket) %>
+                </button>
+                <button type="button" class="btn btn-danger">
+                  <%= link_to 'X', ticket_path(id: ticket.id), method: :delete %>
+                </button>
+                <br />
+                <br />
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <h6>
+        No available tickets!
+      </h6>
+    </div>
+  <% end %>
+</main>
+<footer class="container">
+  <% if user_signed_in? && @event.user_id == current_user.id %>
+    <button type="button" class="btn btn-primary">
+      <%= link_to 'Edit', edit_event_path(@event) %>
+    </button>
+    <button type="button" class="btn btn-danger">
+      <%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </button>
+    <%= render 'inactive_events/form', inactive_event: @new_inactive_event %>
+    <%= render 'tickets/form', ticket: @new_ticket %>
+  <% end %>
+  <button type="button" class="btn btn-primary"><%= link_to 'Back', events_path %></button>
+</footer>
