@@ -10,7 +10,7 @@ class InactiveEventsController < ApplicationController
   # POST /inactive_events
   # POST /inactive_events.json
   def create
-    @inactive_event = InactiveEvent.create(inactive_event_params)
+    @inactive_event = InactiveEvent.find_or_create_by(inactive_event_params)
 
     respond_to do |format|
       if @inactive_event.save
