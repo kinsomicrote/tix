@@ -17,10 +17,8 @@ require("bootstrap")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-// import '../stylesheets/application'
+import '../stylesheets/application'
 import flatpickr from 'flatpickr'
-import "flatpickr/dist/flatpickr.min.css"
-import './bootstrap_custom.js'
 
 $( document ).on('turbolinks:load', function() {
     flatpickr(".eventDate", {
