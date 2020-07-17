@@ -19,10 +19,8 @@ class TicketsController < ApplicationController
     respond_to do |format|
       if @ticket.save
         format.html { redirect_to event_path(params[:ticket]['event_id']), notice: 'Ticket was successfully created.' }
-        format.json { render :show, status: :created, location: @ticket }
       else
         format.html { redirect_to event_path(params[:ticket]['event_id']) }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -33,10 +31,8 @@ class TicketsController < ApplicationController
     respond_to do |format|
       if @ticket.update(ticket_params)
         format.html { redirect_to event_path(params[:ticket]['event_id']), notice: 'Ticket was successfully updated.' }
-        format.json { render :show, status: :ok, location: @ticket }
       else
         format.html { render :edit }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -47,7 +43,6 @@ class TicketsController < ApplicationController
     @ticket.destroy
     respond_to do |format|
       format.html { redirect_to event_path(@ticket.event_id), notice: 'Ticket was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

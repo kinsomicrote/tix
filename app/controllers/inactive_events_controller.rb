@@ -11,13 +11,13 @@ class InactiveEventsController < ApplicationController
   # POST /inactive_events
   # POST /inactive_events.json
   def create
-    @inactive_event = InactiveEvent.find_or_create_by(inactive_event_params)
+    @inactive_event = InactiveEvent.create(inactive_event_params)
 
     respond_to do |format|
       if @inactive_event.save
         format.html { redirect_to event_path(params[:inactive_event]['event_id']), notice: 'Inactive date was successfully created.' }
       else
-        format.html { redirect_to event_path(params[:inactive_event]['event_id']), notice: @inactive_event.errors.messages[:date][0] }
+        format.html { redirect_to event_path(params[:inactive_event]['event_id']), notice: "Inactive date #{@inactive_event.errors.messages[:date][0]}" }
       end
     end
   end

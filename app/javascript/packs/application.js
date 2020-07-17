@@ -29,8 +29,7 @@ $( document ).on('turbolinks:load', function() {
         enableTime: true,
         minDate: new Date()
     })
-    flatpickr(".inactiveDates", {})
-    $(".alert").fadeTo(2000, 500).slideUp(500, function(){
-        $(".alert").slideUp(500);
-    });
+    flatpickr(".inactiveDate", {
+        minDate: new Date()
+    })
 })
